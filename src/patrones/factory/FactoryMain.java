@@ -1,15 +1,13 @@
 package patrones.factory;
 
+import patrones.Patron;
 import patrones.factory.model.FactoryDB;
 import patrones.factory.interfac.IConexion;
 
-import javax.swing.*;
+public class FactoryMain extends Patron {
 
-public class Factorymain {
-
-    private static JTextArea salida = new JTextArea();
-    private Factorymain(){}
-    public static void ejecutar(){
+    public void ejecutar(){
+        this.SelectOption = 1;
 
         FactoryDB fabrica = new FactoryDB();
         IConexion producto = fabrica.getInstancia("Dynamo");
@@ -20,8 +18,7 @@ public class Factorymain {
         salida.append("\n\n"+producto.Conectar());
         salida.append(producto.Desconectar());
 
-        salida.setSize(800, 800);
-        JOptionPane.showMessageDialog(null,salida,"FACTORY METHOD",JOptionPane.INFORMATION_MESSAGE);
+        Show("FACTORY METHOD");
     }
 
 }

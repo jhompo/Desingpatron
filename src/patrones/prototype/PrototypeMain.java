@@ -1,29 +1,25 @@
 package patrones.prototype;
 
-import patrones.prototype.interfac.IProducto;
+import patrones.Patron;
 import patrones.prototype.model.Tv;
-import patrones.singleton.model.Conexion;
 
-import javax.swing.*;
+public class PrototypeMain extends Patron {
 
-public class Prototypemain {
+    public void ejecutar(){
+        this.SelectOption = 3;
 
-    private static JTextArea salida = new JTextArea();
-    private Prototypemain(){}
-    public static void ejecutar(){
         Tv productTV1  = new Tv();
         productTV1.setSerial("serial1111");
 
         /**se puede clonar tantos producto se necesiten,
         solo modificamos el serial por que los otros
-        atributos serian lo mismo*/
+        atributos quedarian igual para el mismo producto*/
         Tv prductTV2  =    (Tv) productTV1.clonar();
         prductTV2.setSerial("serial2222");
 
         salida.setText(productTV1.show());
         salida.append("\n\n"+prductTV2.show());
 
-        salida.setSize(800, 800);
-        JOptionPane.showMessageDialog(null,salida,"SINGLETON",JOptionPane.INFORMATION_MESSAGE);
+        Show("PROTOTYPE");
     }
 }

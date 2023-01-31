@@ -1,18 +1,16 @@
 package patrones.builder;
 
+import patrones.Patron;
 import patrones.builder.interfac.CasaBuilder;
-import patrones.builder.model.Casa;
 import patrones.builder.model.CasaMaderaBuilder;
 import patrones.builder.model.IgluBuilder;
 import patrones.builder.model.IngenieroCivil;
 
-import javax.swing.*;
+public class BuilderMain extends Patron {
 
-public class Buildermain {
+    public void ejecutar() {
+        this.SelectOption = 4;
 
-    private static JTextArea salida = new JTextArea();
-    private Buildermain(){}
-    public static void ejecutar() {
         CasaBuilder builder = new IgluBuilder();
         IngenieroCivil ingeniero = new IngenieroCivil(builder);
         ingeniero.ConstruyeCasa();
@@ -27,8 +25,6 @@ public class Buildermain {
 
         salida.append("\n\n"+ ingeniero.getCasa().show());
 
-        salida.setSize(800, 800);
-        JOptionPane.showMessageDialog(null,salida,"BUILDER",JOptionPane.INFORMATION_MESSAGE);
-
+        Show("BUILDER");
     }
 }
