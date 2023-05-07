@@ -1,12 +1,12 @@
 package patrones.abstractfactory;
 
-import patrones.Patron;
+import patrones.Feature;
 import patrones.abstractfactory.interfac.AbstractFactory;
 import patrones.abstractfactory.interfac.IAnimal;
 import patrones.abstractfactory.interfac.IColor;
 import patrones.abstractfactory.model.Factory;
 
-public class AbstractFactoryMain extends Patron {
+public class AbstractFactoryMain extends Feature {
 
     public void ejecutar(){
         this.SelectOption = 2;

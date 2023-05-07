@@ -1,12 +1,23 @@
-import patrones.Patron;
+import patrones.Feature;
 
 import javax.swing.*;
+import java.lang.reflect.*;
+
+import java.lang.constant.*;
+import java.util.*;
 
 public class Main {
 
+
+
+
     public static void main(String[] args) {
 
+
+
         try {
+
+
 
             Option option[] = {
                     new Option("Singleton", "Singleton"),
@@ -18,7 +29,8 @@ public class Main {
             };
 
             int SelectOption = 0;
-            Patron mypatron=null;
+            Feature mypatron=null;
+
 
             while (SelectOption != -1) {
                 Option result = (Option) JOptionPane.showInputDialog(
@@ -29,8 +41,9 @@ public class Main {
                        null,
                         option, option[SelectOption]);
 
-                        String pack = "patrones."+result.Value.toLowerCase()+"."+result.Value+"Main";
-                        mypatron = (Patron)Class.forName(pack).newInstance();
+                System.out.printf("SingletonMain".getClass().getPackageName());
+                String pack = "patrones."+result.Value.toLowerCase()+"."+result.Value+"Main";
+                        mypatron = (Feature)Class.forName(pack).getDeclaredConstructor().newInstance();
                         mypatron.ejecutar();
                         SelectOption = mypatron.SelectOption;
             }

@@ -1,9 +1,9 @@
 package patrones.prototype;
 
-import patrones.Patron;
+import patrones.Feature;
 import patrones.prototype.model.Tv;
 
-public class PrototypeMain extends Patron {
+public class PrototypeMain extends Feature {
 
     public void ejecutar(){
         this.SelectOption = 3;

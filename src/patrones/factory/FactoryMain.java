@@ -1,10 +1,10 @@
 package patrones.factory;
 
-import patrones.Patron;
+import patrones.Feature;
 import patrones.factory.model.FactoryDB;
 import patrones.factory.interfac.IConexion;
 
-public class FactoryMain extends Patron {
+public class FactoryMain extends Feature {
 
     public void ejecutar(){
         this.SelectOption = 1;

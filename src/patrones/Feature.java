@@ -2,7 +2,7 @@ package patrones;
 
 import javax.swing.*;
 
-public abstract class Patron {
+public abstract class Feature {
     public JTextArea salida = new JTextArea(10,25);
     public int SelectOption = 0;
 

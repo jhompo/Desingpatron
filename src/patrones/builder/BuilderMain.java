@@ -1,29 +1,20 @@
 package patrones.builder;
 
-import patrones.Patron;
-import patrones.builder.interfac.CasaBuilder;
-import patrones.builder.model.CasaMaderaBuilder;
-import patrones.builder.model.IgluBuilder;
-import patrones.builder.model.IngenieroCivil;
+import patrones.Feature;
+import patrones.builder.model.Persona;
 
-public class BuilderMain extends Patron {
+public class BuilderMain extends Feature {
 
     public void ejecutar() {
         this.SelectOption = 4;
 
-        CasaBuilder builder = new IgluBuilder();
-        IngenieroCivil ingeniero = new IngenieroCivil(builder);
-        ingeniero.ConstruyeCasa();
+        Persona person = Persona.Builder("JHOMPO","CARABALLO")
+                .setEmail("JHOMPO@GMAIL.COM")
+                .setTelefono("123233-123")
+                .build();
 
-        salida.setText( ingeniero.getCasa().show());
-        ingeniero.CasaSimple();
-        salida.append( "\n\n"+ingeniero.getCasa().show());
 
-        builder = new CasaMaderaBuilder();
-        ingeniero = new IngenieroCivil(builder);
-        ingeniero.ConstruyeCasa();
-
-        salida.append("\n\n"+ ingeniero.getCasa().show());
+        salida.append("\n\n"+ person.toString());
 
         Show("BUILDER");
     }

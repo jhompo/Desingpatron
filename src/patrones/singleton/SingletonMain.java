@@ -1,11 +1,11 @@
 package patrones.singleton;
 
-import patrones.Patron;
+import patrones.Feature;
 import patrones.singleton.model.Conexion;
 
-public class SingletonMain extends Patron {
+public class SingletonMain extends Feature {
 
-    @Override
+    //@Override
     public void ejecutar(){
         this.SelectOption = 0;
 
