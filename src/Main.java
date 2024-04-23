@@ -8,17 +8,9 @@ import java.util.*;
 
 public class Main {
 
-
-
-
     public static void main(String[] args) {
 
-
-
         try {
-
-
-
             Option option[] = {
                     new Option("Singleton", "Singleton"),
                     new Option("Factory Method", "Factory"),
@@ -31,7 +23,6 @@ public class Main {
             int SelectOption = 0;
             Feature mypatron=null;
 
-
             while (SelectOption != -1) {
                 Option result = (Option) JOptionPane.showInputDialog(
                         null,
@@ -42,7 +33,7 @@ public class Main {
                         option, option[SelectOption]);
 
                 System.out.printf("SingletonMain".getClass().getPackageName());
-                String pack = "patrones."+result.Value.toLowerCase()+"."+result.Value+"Main";
+                String pack = "patrones.creacionales."+result.Value.toLowerCase()+"."+result.Value+"Main";
                         mypatron = (Feature)Class.forName(pack).getDeclaredConstructor().newInstance();
                         mypatron.ejecutar();
                         SelectOption = mypatron.SelectOption;
