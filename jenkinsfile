@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Clonar el código desde el repositorio GitHub
+                git url: 'https://github.com/usuario/repo.git', branch: 'main'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Construir el proyecto (ajustar el comando si usas otra herramienta que no sea Maven)
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Ejecutar las pruebas
+                sh 'mvn test'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                // Configurar el entorno de SonarQube usando el nombre del servidor que configuraste en Jenkins
+                withSonarQubeEnv('SonarQube Server') {
+                    // Ejecutar SonarQube Scanner para analizar el código
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=tu-proyecto -Dsonar.host.url=http://localhost:9000 -Dsonar.login=tu-token'
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                // Espera el resultado del análisis y revisa el Quality Gate
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Limpieza al finalizar el pipeline, independientemente del resultado
+            cleanWs()
+        }
+
+        failure {
+            // Notificación en caso de fallo (puedes integrar notificaciones por correo, Slack, etc.)
+            echo 'El pipeline falló.'
+        }
+
+        success {
+            // Notificación en caso de éxito
+            echo 'El pipeline se completó con éxito.'
+        }
+    }
+}
