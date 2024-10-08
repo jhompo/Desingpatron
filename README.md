@@ -4,5 +4,5 @@
 ### - Factory Method
 ### - Abstract Factory
 ### - Prototype
-### - Builder Simple y complejo
+### - Builder
 
