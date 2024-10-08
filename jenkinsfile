@@ -25,10 +25,16 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                // Configurar el entorno de SonarQube usando el nombre del servidor que configuraste en Jenkins
-                withSonarQubeEnv('SonarQube Server') {
-                    // Ejecutar SonarQube Scanner para analizar el código
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=tu-proyecto -Dsonar.host.url=http://localhost:9000 -Dsonar.login=tu-token'
+                withSonarQubeEnv('SonarQube') {
+                    // Ejecutar el análisis de SonarQube
+                    // Reemplace 'sonar.projectKey' con la clave de su proyecto
+                    sh """
+                    sonar-scanner \
+                      -Dsonar.projectKey=mi-proyecto \
+                      -Dsonar.sources=. \
+                      -Dsonar.host.url=http://localhost:9000 \
+                      -Dsonar.login=your-sonarqube-token
+                    """
                 }
             }
         }
