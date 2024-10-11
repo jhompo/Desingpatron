@@ -6,11 +6,6 @@ pipeline {
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
 
-    tools {
-        // Usa el nombre de la instalación que configuraste en Global Tool Configuration
-        sonar 'SonarScanner' // Cambia 'sonarScanner' a 'sonar'
-    }
-
     stages {
         stage('Checkout') {
             steps {
