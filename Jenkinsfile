@@ -7,7 +7,7 @@ pipeline {
     }
 
     tools {
-        maven 'M2_HOME' // El nombre que le diste en la configuración de Global Tool Configuration
+        sonarScanner 'SonarScanner' // Configurado en Global Tool Configuration
     }
 
     stages {
@@ -15,6 +15,7 @@ pipeline {
             steps {
                 // Clona el repositorio de GitHub
                 checkout scm
+                sh 'ls -la'
             }
         }
         stage('Compilación') {
@@ -40,19 +41,22 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    // Ejecuta el análisis de SonarQube
-                    sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=Devops-proyects-00001jx \
+                withSonarQubeEnv('SonarQubeServer') { // Usar el nombre de tu servidor SonarQube configurado
+                    sh 'sonar-scanner \
+                       -Dsonar.projectKey=Devops-proyects-00001jx \
                         -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=squ_a0fd6f032dc169e3ee44cc8773d2368d3d6d1dca \
+                        -Dsonar.login=squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97 \
                         -Dsonar.sources=src \
-                        -Dsonar.java.binaries=bin
-                    '''
+                        -Dsonar.java.binaries=bin'
                 }
             }
         }
+    }
+    post {
+        always {
+            echo 'Análisis de SonarQube completado.'
+        }
+    }
     }
 }
     
