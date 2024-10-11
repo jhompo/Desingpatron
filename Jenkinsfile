@@ -7,7 +7,8 @@ pipeline {
     }
 
     tools {
-        sonarScanner 'SonarScanner' // Configurado en Global Tool Configuration
+        // Usa el nombre de la instalación que configuraste en Global Tool Configuration
+        sonar 'SonarScanner' // Cambia 'sonarScanner' a 'sonar'
     }
 
     stages {
