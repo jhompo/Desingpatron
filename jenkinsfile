@@ -1,37 +1,26 @@
 pipeline {
-    agent any  // Utiliza cualquier agente disponible
+    agent any  //Utiliza cualquier agente disponible
 
     environment {
-        SONARQUBE_SERVER = 'http://sonarqube:9000' //  URL de tu servidor SonarQube
-        SONARQUBE_TOKEN = credentials('squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97') //  ID de tus credenciales
+        SONARQUBE_SERVER = 'http://sonarqube:9000' //URL de tu servidor SonarQube
+        SONARQUBE_TOKEN = credentials('squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97') //ID de tus credenciales
     }
 
     stages {
+       stages {
         stage('Checkout') {
             steps {
-                // Clona el repositorio de GitHub
                 checkout scm
             }
         }
-        stage('Compilación') {
+        stage('Build') {
             steps {
-                script {
-                    // Cambia al directorio del proyecto
-                    sh 'cd /var/jenkins_home/workspace/Designpatron'
-                    // Crea el directorio bin si no existe y compila los archivos Java
-                    sh '''
-                        mkdir -p bin
-                        find src -name "*.java" -print | xargs javac -d bin -sourcepath src
-                    '''
-                }
+                sh 'javac -d bin -sourcepath src src/**/*.java'
             }
         }
-        stage('Ejecución') {
+        stage('Test') {
             steps {
-                script {
-                    // Ejecuta la clase principal
-                    sh 'java -cp bin Main'
-                }
+                sh 'java -cp bin Main'
             }
         }
         stage('SonarQube Analysis') {
