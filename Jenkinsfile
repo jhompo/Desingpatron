@@ -41,9 +41,9 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQubeServer') { // Usar el nombre de tu servidor SonarQube configurado
+                withSonarQubeEnv('SonarQubeServer') { //Usar el nombre de tu servidor SonarQube configurado
                     sh 'sonar-scanner \
-                       -Dsonar.projectKey=Devops-proyects-00001jx \
+                        -Dsonar.projectKey=Devops-proyects-00001jx \
                         -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.login=squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97 \
                         -Dsonar.sources=src \
