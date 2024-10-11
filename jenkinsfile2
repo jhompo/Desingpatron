@@ -66,3 +66,34 @@ pipeline {
         }
     }
 }
+
+
+pipeline {
+    agent any 
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/jhompo/Desingpatron.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    sh 'mkdir -p bin'
+                    sh 'javac -d bin -sourcepath src src/Main.java src/Option.java src/patrones/Feature.java'
+                }
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Configura las propiedades de SonarQube aquí
+                    withSonarQubeEnv('SonarQube') { // Reemplaza 'SonarQube' con tu nombre de configuración de SonarQube
+                        sh 'sonar-scanner -Dsonar.projectKey=my_project -Dsonar.sources=src -Dsonar.java.binaries=bin'
+                    }
+                }
+            }
+        }
+    }
+}
