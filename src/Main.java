@@ -34,7 +34,7 @@ public class Main {
 
                 System.out.printf("SingletonMain".getClass().getPackageName());
                 String pack = "patrones.creacionales."+result.Value.toLowerCase()+"."+result.Value+"Main";
-                        mypatron = (Feature)Class.forName(pack).getDeclaredConstructor().newInstance();
+                        mypatron = (Feature) Class.forName(pack).getDeclaredConstructor().newInstance();
                         mypatron.ejecutar();
                         SelectOption = mypatron.SelectOption;
             }

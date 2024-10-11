@@ -1,68 +1,53 @@
 pipeline {
-    agent any
+    agent any  // Utiliza cualquier agente disponible
+
+    environment {
+        SONARQUBE_SERVER = 'http://sonarqube:9000' // Cambia a la URL de tu servidor SonarQube
+        SONARQUBE_TOKEN = credentials('squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97') // Reemplaza con el ID de tus credenciales
+    }
 
     stages {
         stage('Checkout') {
             steps {
-                // Clonar el código desde el repositorio GitHub
-                git url: 'https://github.com/usuario/repo.git', branch: 'main'
+                // Clona el repositorio de GitHub
+                checkout scm
             }
         }
-
-        stage('Build') {
+        stage('Compilación') {
             steps {
-                // Construir el proyecto (ajustar el comando si usas otra herramienta que no sea Maven)
-                sh 'mvn clean install'
+                script {
+                    // Cambia al directorio del proyecto
+                    sh 'cd /var/jenkins_home/workspace/Designpatron'
+                    // Crea el directorio bin si no existe y compila los archivos Java
+                    sh '''
+                        mkdir -p bin
+                        find src -name "*.java" -print | xargs javac -d bin -sourcepath src
+                    '''
+                }
             }
         }
-
-        stage('Test') {
+        stage('Ejecución') {
             steps {
-                // Ejecutar las pruebas
-                sh 'mvn test'
+                script {
+                    // Ejecuta la clase principal
+                    sh 'java -cp bin Main'
+                }
             }
         }
-
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    // Ejecutar el análisis de SonarQube
-                    // Reemplace 'sonar.projectKey' con la clave de su proyecto
-                    sh """
-                    sonar-scanner \
-                      -Dsonar.projectKey=mi-proyecto \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=http://localhost:9000 \
-                      -Dsonar.login=your-sonarqube-token
-                    """
+                script {
+                    // Ejecuta el análisis de SonarQube
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=Devops-proyects-00001jx \
+                        -Dsonar.host.url=${SONARQUBE_SERVER} \
+                        -Dsonar.login=${SONARQUBE_TOKEN} \
+                        -Dsonar.sources=src \
+                        -Dsonar.java.binaries=bin
+                    '''
                 }
             }
-        }
-
-        stage('Quality Gate') {
-            steps {
-                // Espera el resultado del análisis y revisa el Quality Gate
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-    }
-
-    post {
-        always {
-            // Limpieza al finalizar el pipeline, independientemente del resultado
-            cleanWs()
-        }
-
-        failure {
-            // Notificación en caso de fallo (puedes integrar notificaciones por correo, Slack, etc.)
-            echo 'El pipeline falló.'
-        }
-
-        success {
-            // Notificación en caso de éxito
-            echo 'El pipeline se completó con éxito.'
         }
     }
 }
