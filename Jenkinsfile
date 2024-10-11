@@ -1,6 +1,11 @@
 pipeline {
     agent any  // Utiliza cualquier agente disponible
 
+    environment {
+        JAVA_HOME = '/opt/java/openjdk' // Ajusta esta ruta a la instalación de Java en tu servidor
+        PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+    }
+
     tools {
         maven 'M2_HOME' // El nombre que le diste en la configuración de Global Tool Configuration
     }
