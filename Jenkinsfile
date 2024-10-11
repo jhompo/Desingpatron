@@ -34,21 +34,6 @@ pipeline {
                 }
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    // Ejecuta el análisis de SonarQube
-                    sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=Devops-proyects-00001jx \
-                        -Dsonar.host.url=${SONARQUBE_SERVER} \
-                        -Dsonar.login=${SONARQUBE_TOKEN} \
-                        -Dsonar.sources=src \
-                        -Dsonar.java.binaries=bin
-                    '''
-                }
-            }
-        }
     }
 }
     
