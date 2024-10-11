@@ -2,7 +2,7 @@ pipeline {
     agent any  // Utiliza cualquier agente disponible
 
     tools {
-        maven 'M2_HOME"' // El nombre que le diste en la configuración de Global Tool Configuration
+        maven 'M2_HOME' // El nombre que le diste en la configuración de Global Tool Configuration
     }
 
     stages {
