@@ -6,6 +6,11 @@ pipeline {
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
 
+    tools {
+        maven 'M2_HOME' // Asegúrate de tener Maven configurado también
+        sonar 'SonarScanner' // Asegúrate de que este nombre coincida
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -35,7 +40,17 @@ pipeline {
                 }
             }
         }
-        stage('SonarQube Analysis') {
+        stage('SonarQube 1') {
+            steps {
+                sh 'sonar-scanner \
+                    -Dsonar.projectKey=Devops-proyects-00001jx \
+                    -Dsonar.host.url=http://sonarqube:9000 \
+                    -Dsonar.login=squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97 \
+                    -Dsonar.sources=src \
+                    -Dsonar.java.binaries=bin'
+            }
+        }
+        stage('SonarQube 2') {
             steps {
                 withSonarQubeEnv('SonarQubeServer') { // Usar el nombre de tu servidor SonarQube configurado
                     sh 'sonar-scanner \
