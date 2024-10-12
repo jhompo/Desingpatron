@@ -40,12 +40,14 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SonarQubeServer') {
-                    sh '''
+                   sh """
                         ${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectKey=Devops-proyects-00001jx \
                         -Dsonar.sources=src \
-                        -Dsonar.java.binaries=bin
-                    '''
+                        -Dsonar.java.binaries=bin \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97
+                    """
                 }
             }
         }
