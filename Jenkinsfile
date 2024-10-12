@@ -7,8 +7,7 @@ pipeline {
     }
 
     tools {
-        maven 'M2_HOME' // Asegúrate de tener Maven configurado también
-        sonar 'SonarScanner' // Asegúrate de que este nombre coincida
+        sonarScanner  'SonarScanner' // Asegúrate de que este nombre coincida
     }
 
     stages {
