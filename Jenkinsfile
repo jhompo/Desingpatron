@@ -34,6 +34,17 @@ pipeline {
                 }
             }
         }
+        stage('Crear JAR') {
+            steps {
+                script {
+                    sh '''
+                        mkdir -p target
+                        jar cvf target/my-app.jar -C bin .
+                    '''
+                }
+            }
+        }
+        
         stage('SonarQube Analysis') {
             environment {
                 SCANNER_HOME = tool 'SonarScanner'  // Asegúrate de que este nombre coincida con tu instalación de SonarScanner en Jenkins
@@ -49,6 +60,25 @@ pipeline {
                         -Dsonar.login=squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97
                     """
                 }
+            }
+        }
+        stage('Deploy to Nexus') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: 'http://localhost:8081',
+                    groupId: 'com.jhomposoft',
+                    version: '1.0-${BUILD_NUMBER}',
+                    repository: 'REPO-JAVA',
+                    credentialsId: 'login-nexus',
+                    artifacts: [
+                        [artifactId: 'my-java-app', 
+                        classifier: '', 
+                        file: 'target/my-app.jar', 
+                        type: 'jar']
+                    ]
+                )
             }
         }
     }
