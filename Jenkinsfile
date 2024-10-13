@@ -34,17 +34,6 @@ pipeline {
                 }
             }
         }
-        stage('Crear JAR') {
-            steps {
-                script {
-                    sh '''
-                        mkdir -p target
-                        jar cvf target/my-app.jar -C bin .
-                    '''
-                }
-            }
-        }
-
         
         stage('SonarQube Analysis') {
             environment {
@@ -64,6 +53,17 @@ pipeline {
             }
         }
 
+        stage('Crear JAR') {
+            steps {
+                script {
+                    sh '''
+                        mkdir -p target
+                        jar cvf target/my-app.jar -C bin .
+                    '''
+                }
+            }
+        }
+        
         stage('Deploy to Nexus') {
             steps {
                 nexusArtifactUploader(
