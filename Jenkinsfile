@@ -45,6 +45,25 @@ pipeline {
             }
         }
 
+        
+        stage('SonarQube Analysis') {
+            environment {
+                SCANNER_HOME = tool 'SonarScanner'  // Asegúrate de que este nombre coincida con tu instalación de SonarScanner en Jenkins
+            }
+            steps {
+                withSonarQubeEnv('SonarQubeServer') {
+                   sh """
+                        ${SCANNER_HOME}/bin/sonar-scanner \
+                        -Dsonar.projectKey=Devops-proyects-00001jx \
+                        -Dsonar.sources=src \
+                        -Dsonar.java.binaries=bin \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97
+                    """
+                }
+            }
+        }
+
         stage('Deploy to Nexus') {
             steps {
                 nexusArtifactUploader(
@@ -62,24 +81,6 @@ pipeline {
                         type: 'jar']
                     ]
                 )
-            }
-        }
-        
-        stage('SonarQube Analysis') {
-            environment {
-                SCANNER_HOME = tool 'SonarScanner'  // Asegúrate de que este nombre coincida con tu instalación de SonarScanner en Jenkins
-            }
-            steps {
-                withSonarQubeEnv('SonarQubeServer') {
-                   sh """
-                        ${SCANNER_HOME}/bin/sonar-scanner \
-                        -Dsonar.projectKey=Devops-proyects-00001jx \
-                        -Dsonar.sources=src \
-                        -Dsonar.java.binaries=bin \
-                        -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97
-                    """
-                }
             }
         }
 
