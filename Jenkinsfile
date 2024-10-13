@@ -50,7 +50,7 @@ pipeline {
                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: 'localhost:8081',
+                    nexusUrl: 'nexus:8081',
                     groupId: 'com.jhomposoft',
                     version: '1.0-${BUILD_NUMBER}',
                     repository: 'REPO-JAVA',
