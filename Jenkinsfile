@@ -91,6 +91,11 @@ pipeline {
                     // Ejecutar Ansible desde el contenedor de Ansible
                     sh "docker exec ${env.JAVA_HOME} ansible-playbook /playbook.yml -i /hosts"
                 }
+                /*Con el plugin
+                ansiblePlaybook(
+                    playbook: '/ruta/del/playbook.yml',
+                    inventory: '/ruta/al/inventario/hosts'
+                )*/
             }
         }
 
