@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         JAVA_HOME = '/opt/java/openjdk'
+        ANSIBLE = 'ansible'
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
 
@@ -81,6 +82,15 @@ pipeline {
                         type: 'jar']
                     ]
                 )
+            }
+        }
+
+        stage('Ejecutar Playbook de Ansible') {
+            steps {
+                script {
+                    // Ejecutar Ansible desde el contenedor de Ansible
+                    sh "docker exec ${env.JAVA_HOME} ansible-playbook /playbook.yml -i /inventario/hosts"
+                }
             }
         }
 
