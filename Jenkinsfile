@@ -89,7 +89,7 @@ pipeline {
             steps {
                 script {
                     // Ejecutar Ansible desde el contenedor de Ansible
-                    sh "docker exec ${env.JAVA_HOME} ansible-playbook /playbook.yml -i /inventario/hosts"
+                    sh "docker exec ${env.JAVA_HOME} ansible-playbook /playbook.yml -i /hosts"
                 }
             }
         }
