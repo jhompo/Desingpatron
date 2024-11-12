@@ -78,7 +78,7 @@ pipeline {
                     groupId: 'com.jhomposoft',
                     version: '1.0-${BUILD_NUMBER}',
                     repository: 'REPO-JAVA',
-                    credentialsId: 'login-nexus',
+                    credentialsId: 'id-nexus',
                     artifacts: [
                         [artifactId: 'my-java-app', 
                         classifier: '', 
