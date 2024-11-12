@@ -112,15 +112,12 @@ pipeline {
 
         stage('Ejecutar Playbook de Ansible') {
             steps {
-                script {
-                    // Ejecutar Ansible desde el contenedor de Ansible
-                    sh "docker exec ${env.ANSIBLE} ansible-playbook /playbook.yml -i /hosts"
-                }
-                /*Con el plugin
                 ansiblePlaybook(
-                    playbook: '/ruta/del/playbook.yml',
-                    inventory: '/ruta/al/inventario/hosts'
-                )*/
+                    playbook: 'ansible/playbook.yml',
+                    inventory: 'ansible/hosts',
+                    installation: 'Ansible',  // Nombre de tu instalación de Ansible en Jenkins
+                    colorized: true
+                )
             }
         }
 
