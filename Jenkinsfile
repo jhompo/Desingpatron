@@ -6,7 +6,7 @@ pipeline {
 
     environment {
         JAVA_HOME = '/opt/java/openjdk'
-        JAVA_HOME = 'ansible'
+        ANSIBLE = 'ansible'
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
 
