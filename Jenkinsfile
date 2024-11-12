@@ -9,6 +9,7 @@ pipeline {
         JAVA_HOME = '/opt/java/openjdk'
         ANSIBLE = 'ansible'
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+        WORKSPACE = pwd()
     }
 
     tools {
