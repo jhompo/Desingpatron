@@ -3,6 +3,7 @@ pipeline {
     
     // Verifica que exista el JDK con nombre 'JDK-11-jenkins'
     // Verifica que exista el SonarScanner con nombre 'SonarScanner' en tool y 'SonarQubeServer' en system
+    // Verificar Credential ID de nexus
 
     environment {
         JAVA_HOME = '/opt/java/openjdk'
