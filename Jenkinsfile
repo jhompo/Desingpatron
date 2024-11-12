@@ -91,25 +91,6 @@ pipeline {
             }
         }
 
-        stage('Preparar Ansible') {
-            steps {
-                script {
-                    // Copiar archivos necesarios al contenedor de Ansible
-                    sh """
-                        # Asegurarse que el contenedor ansible existe
-                        if ! docker ps | grep -q ${env.ANSIBLE}; then
-                            echo "Error: Contenedor ansible no encontrado"
-                            exit 1
-                        fi
-                        
-                        # Copiar archivos al contenedor
-                        docker cp ${WORKSPACE}/ansible/playbook.yml ${env.ANSIBLE}:/playbook.yml
-                        docker cp ${WORKSPACE}/ansible/hosts ${env.ANSIBLE}:/hosts
-                    """
-                }
-            }
-        }
-
         stage('Ejecutar Playbook de Ansible') {
             steps {
                 ansiblePlaybook(
