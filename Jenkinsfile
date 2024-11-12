@@ -1,8 +1,12 @@
 pipeline {
     agent any
+    
+    // Verifica que exista el JDK con nombre 'JDK-11-jenkins'
+    // Verifica que exista el SonarScanner con nombre 'SonarScanner' en tool y 'SonarQubeServer' en system
 
     environment {
         JAVA_HOME = '/opt/java/openjdk'
+        JAVA_HOME = 'ansible'
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     }
 
@@ -40,16 +44,17 @@ pipeline {
                 SCANNER_HOME = tool 'SonarScanner'  // Asegúrate de que este nombre coincida con tu instalación de SonarScanner en Jenkins
             }
             steps {
-                withSonarQubeEnv('SonarQubeServer') {
-                   sh """
-                        ${SCANNER_HOME}/bin/sonar-scanner \
-                        -Dsonar.projectKey=Devops-proyects-00001jx \
-                        -Dsonar.sources=src \
-                        -Dsonar.java.binaries=bin \
-                        -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.login=squ_08d56badd6abc114e4e6110cd6487728efd95b42
-                    """
-                }
+                // withSonarQubeEnv('SonarQubeServer') {
+                //    sh """
+                //         ${SCANNER_HOME}/bin/sonar-scanner \
+                //         -Dsonar.projectKey=Devops-proyects-00001jx \
+                //         -Dsonar.sources=src \
+                //         -Dsonar.java.binaries=bin \
+                //         -Dsonar.host.url=http://sonarqube:9000 \
+                //         -Dsonar.login=squ_08d56badd6abc114e4e6110cd6487728efd95b42
+                //     """
+                // }
+                echo 'Omitir Sonarube por fast Nexus'
             }
         }
 
@@ -64,25 +69,25 @@ pipeline {
             }
         }
         
-        // stage('Deploy to Nexus') {
-        //     steps {
-        //         nexusArtifactUploader(
-        //             nexusVersion: 'nexus3',
-        //             protocol: 'http',
-        //             nexusUrl: 'nexus:8081',
-        //             groupId: 'com.jhomposoft',
-        //             version: '1.0-${BUILD_NUMBER}',
-        //             repository: 'REPO-JAVA',
-        //             credentialsId: 'login-nexus',
-        //             artifacts: [
-        //                 [artifactId: 'my-java-app', 
-        //                 classifier: '', 
-        //                 file: 'target/my-app.jar', 
-        //                 type: 'jar']
-        //             ]
-        //         )
-        //     }
-        // }
+        stage('Deploy to Nexus') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: 'nexus:8081',
+                    groupId: 'com.jhomposoft',
+                    version: '1.0-${BUILD_NUMBER}',
+                    repository: 'REPO-JAVA',
+                    credentialsId: 'login-nexus',
+                    artifacts: [
+                        [artifactId: 'my-java-app', 
+                        classifier: '', 
+                        file: 'target/my-app.jar', 
+                        type: 'jar']
+                    ]
+                )
+            }
+        }
 
         // stage('Ejecutar Playbook de Ansible') {
         //     steps {
