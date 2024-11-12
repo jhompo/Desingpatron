@@ -91,17 +91,16 @@ pipeline {
             }
         }
 
-        stage('Ejecutar Playbook de Ansible') {
-            steps {
-                ansiblePlaybook(
-                    playbook: 'ansible/playbook.yml',
-                    inventory: 'ansible/hosts',
-                    installation: 'Ansible',  // Nombre de tu instalación de Ansible en Jenkins
-                    colorized: true
-                )
-            }
-        }
-
+        // stage('Ejecutar Playbook de Ansible') {
+        //     steps {
+        //         ansiblePlaybook(
+        //             playbook: 'ansible/playbook.yml',
+        //             inventory: 'ansible/hosts',
+        //             installation: 'Ansible',  // Nombre de tu instalación de Ansible en Jenkins
+        //             colorized: true
+        //         )
+        //     }
+        // }
         
     }
     post {
