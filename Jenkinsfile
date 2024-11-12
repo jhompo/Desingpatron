@@ -93,6 +93,10 @@ pipeline {
 
         // stage('Ejecutar Playbook de Ansible') {
         //     steps {
+                // script {
+                //     // Ejecutar Ansible desde el contenedor de Ansible
+                //     sh "docker exec ${env.ANSIBLE} ansible-playbook /playbook.yml -i /hosts"
+                // }
         //         ansiblePlaybook(
         //             playbook: 'ansible/playbook.yml',
         //             inventory: 'ansible/hosts',
