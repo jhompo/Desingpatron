@@ -48,7 +48,7 @@ pipeline {
         //                 -Dsonar.sources=src \
         //                 -Dsonar.java.binaries=bin \
         //                 -Dsonar.host.url=http://sonarqube:9000 \
-        //                 -Dsonar.login=squ_d5c424dd35b187b5154a63ce5cb036cf869c8f97
+        //                 -Dsonar.login=squ_08d56badd6abc114e4e6110cd6487728efd95b42
         //             """
         //         }
         //     }
